@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leader-Board</title>
+    <style>
+        body{
+            background-color: black;
+        }
+        #leader{
+            color: blanchedalmond;
+            text-align: center;
+        }
+        /*#upbox{
+            display: flex;
+            justify-content: center;
+            color: aliceblue;
+        }*/
+        #display{
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            height: 40px;
+            width: 70px;
+            border: 2px solid rgb(251, 255, 0);
+            border-radius: 10px;
+            margin-left: 35px;
+            margin-right: 45px;
+        }
+        #lowscore{
+            margin-top: -1px;
+        }
+        #maxscore{
+            margin-top: -1px;
+        }
+        #countscore{
+            color: aliceblue;
+            margin-top: 13px;
+        }
+        #score{
+            display: flex;
+            justify-content: center;
+            color: antiquewhite;
+        }
+        #score2{
+            color: antiquewhite;
+            display: flex;
+            justify-content: center;
+        }
+        #scoredisply{
+            margin-top: -10px;
+            text-align: center;
+            width: 210px;
+            height: 50px;
+            border-radius: 5px;
+            border: 2px  solid;
+            color: rgba(255, 251, 0, 0.781);
+        }
+        #min{
+            display: flex;
+            justify-content: center;
+            font-family: sans-serif;
+            margin-top: -5px;
+            margin-left: 45px;
+            margin-right: 55px;
+            color: aliceblue;
+        }
+        #score{
+            margin-top: -0px;
+        }
+        #boxdail{
+            margin-left: -5px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        #dailpad{
+            margin-left:0;
+            margin-right: 5px;
+            display: grid;
+            text-align: center;
+            justify-content: center;
+            row-gap: 5px;
+            column-gap: 10px;
+            grid-template-columns:1fr 1fr 1fr ;
+            grid-template-rows: 1fr 1fr 1fr ;
+        }
+        button{
+            font-size: 30px;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: rgb(0, 0, 0);
+            background-color: darkgray;
+            height: 50px;
+            width: 60px;
+        }
+        .zero{
+            grid-column: 1 / -1;
+            width: 200px;
+        }
+        #lastbox{
+            display: flex;
+            justify-content: center;
+        }
+        #Enter{
+            margin-left: -10px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <h1 id="leader">Leader-Board</h1>
+    <div id="upbox">
+        <div id="min">
+            <div id="min">
+                <h1 style="color: red; margin-left: 10px;">MIN</h1>
+            </div>
+            <div id="min">
+                <h1 style="color: greenyellow; margin-left: 5px;">MAX</h1>
+            </div>
+        </div>
+        <div id="score">
+            <div id="display">
+                <h1 id="lowscore">0</h1>
+            </div>
+            <div id="display">
+                <h1 id="maxscore">0</h1>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    <div>
+        <div id="score2">
+            <h1 style="color: cornflowerblue;">Score</h1>
+        </div>
+        <div id="min">
+            <div id="scoredisply">
+                <h2 id="countscore" >0</h2>
+            </div>
+        </div>
+    </div>
+    </header>
+    <main>
+        <div id="boxdail">
+            <div id="dailpad">
+                <button id="bt1" value="1" >1</button>
+                <button id="bt2" value="2" >2</button>
+                <button id="bt3" value="3" >3</button>
+                <button id="bt4" value="4" >4</button>
+                <button id="bt5" value="5" >5</button>
+                <button id="bt6" value="6" >6</button>
+                <button id="bt7" value="7" >7</button>
+                <button id="bt8" value="8" >8</button>
+                <button id="bt9" value="9" >9</button>
+                <button id="bt0" class="zero" value="0" >0</button>
+            </div>
+        </div>
+    <div id="lastbox">
+        <button id="Enter" value="Enter">ENTER</button>
+    </div>
+    </main>
+    <script>
+         const lowScoreDisplay = document.getElementById('lowscore');
+        const maxScoreDisplay = document.getElementById('maxscore');
+        const countScoreDisplay = document.getElementById('countscore');
+        const numericButtons = document.querySelectorAll('button[value]');
+        const enterButton = document.getElementById('Enter');
+        const scoreDisplay = countScoreDisplay;
+        let lowScore = 0;
+        let maxScore = 0;
+        let countScore = 0;
+        function updateDisplay() {
+            lowScoreDisplay.textContent = lowScore;
+            maxScoreDisplay.textContent = maxScore;
+            scoreDisplay.textContent = countScore;
+        }
+        function handleNumericButtonClick(event) {
+            const value = event.target.value;
+            countScore = parseInt(countScore + value);
+            updateDisplay();
+        }
+        function handleEnterButtonClick() {
+            if (countScore < lowScore || lowScore === 0) {
+                lowScore = countScore;
+            }
+            if (countScore > maxScore) {
+                maxScore = countScore;
+            }
+            countScore = 0;
+            updateDisplay();
+        }
+        numericButtons.forEach(button => {
+            button.addEventListener('click', handleNumericButtonClick);
+        });
+        enterButton.addEventListener('click', handleEnterButtonClick);
+    </script>
+    </script>
+</body>
+</html>

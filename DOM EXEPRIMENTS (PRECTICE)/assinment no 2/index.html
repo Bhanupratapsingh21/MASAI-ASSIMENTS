@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <style>
+        .teglines{
+            margin-top: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        body{
+            background-color: black;
+        }
+        #box1{
+            margin-bottom: -20px;
+            display: flex;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #teg{
+            color: red;
+        }
+        #lineby{
+            color: aliceblue;
+            text-align: center;
+            margin-top: auto;
+        }
+        .headingbody{
+            height: fit-content;
+            display: flex;
+            justify-content: center;
+        }
+        .displaybody{
+            margin-left: 25px;
+            margin-right:30px;
+            border-radius: 10px;
+            margin-top: -25px;
+            border: 2px solid red;
+            display: flex;
+            justify-content: flex-end;
+            width: 250px;
+        }
+        .buttonbody{
+                width: 250px;
+                margin-top: 15px;
+                display: grid;
+                grid-column-start:5;
+                grid-column-end: 4;
+                grid-template-columns:1fr 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr 1fr;
+                column-gap: 0px;
+                row-gap: 5px;
+        }
+        button{
+            font-size: 25px;
+            font-family: sans-serif;
+            border-radius: 25px;
+            height: 50px;
+            width: 50px;
+            border: transparent;
+            background-color: rgb(240, 167, 10);
+        }
+        
+        #displayno{
+            font-family: 'Courier New', Courier, monospace;
+            color: white;
+            font-size: 35px;
+            margin-left:10px ;
+            margin-right: 10px;
+            margin-top: 0;
+            margin-bottom:0;
+            text-align: end;
+        }
+        .box3{
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+        #obutton{
+            grid-column: 1 / 4;
+            background-color: aliceblue;  
+            width: 180px; 
+        }
+        .box4{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="headingbody">
+    <header>
+        <div class="teglines">
+            <div id="box1">
+            <h1 id="teg">BASIC</h1>
+            <h1 style="color: aliceblue;">-Calculator</h1>
+            </div>
+            <h6 id="lineby" style="color: aliceblue; ">Created By Bhanu</h6>
+        </div>
+    </header>
+    </div>
+    <body>
+        <div class="box3">
+            <div class="displaybody">
+            <h1 id="displayno">0</h1>
+            </div>
+        </div>
+        <div class="box4">
+        <div class="buttonbody">
+            <button onclick="test()" value="AC">AC</button>
+            <button onclick="test()" value="%">%</button>
+            <button onclick="test()" value="." >.</button>
+            <button onclick="test()" value="=">=</button>
+            <button onclick="test()" value=1>1</button>
+            <button onclick="test()" value=2>2</button>
+            <button onclick="test()" value=3>3</button>
+            <button onclick="test()" value="+">+</button>
+            <button onclick="test()" value=4>4</button>
+            <button onclick="test()" value=4>5</button>
+            <button onclick="test()" value=6>6</button>
+            <button onclick="test()" value="-">-</button>
+            <button onclick="test()" value=7>7</button>
+            <button onclick="test()" value=8>8</button>
+            <button onclick="test()" value=9>9</button>
+            <button onclick="test()" value="*">*</button>
+            <button onclick="test()" value=0 id="obutton">0</button>
+            <button onclick="test()" value="/">/</button>
+        </div>
+        </div>
+        </div>
+</body>
+<script>
+ let currentInput = '0';
+    let previousInput = '0';
+    let operator = null;
+    let display = document.getElementById('displayno');
+
+    function updateDisplay() {
+        display.textContent = currentInput;
+    }
+
+    function handleNumberClick(number) {
+        if (currentInput === '0' || currentInput === 'Error') {
+            currentInput = number;
+        } else {
+            currentInput += number;
+        }
+        updateDisplay();
+    }
+
+    function handleOperatorClick(newOperator) {
+        if (operator !== null) {
+            performCalculation();
+        }
+        previousInput = currentInput;
+        currentInput = '0';
+        operator = newOperator;
+    }
+
+    function performCalculation() {
+        let num1 = parseFloat(previousInput);
+        let num2 = parseFloat(currentInput);
+
+        switch (operator) {
+            case '+':
+                currentInput = (num1 + num2).toString();
+                break;
+            case '-':
+                currentInput = (num1 - num2).toString();
+                break;
+            case '*':
+                currentInput = (num1 * num2).toString();
+                break;
+            case '%':
+                currentInput = (num1 % num2).toString();
+                break;
+            case '/':
+                if (num2 === 0) {
+                    currentInput = 'Error';
+                } else {
+                    currentInput = (num1 / num2).toString();
+                }
+                break;
+        }
+
+        operator = null;
+        updateDisplay();
+    }
+
+    function clear() {
+        currentInput = '0';
+        previousInput = '0';
+        operator = null;
+        updateDisplay();
+    }
+
+    function equals() {
+        if (operator !== null) {
+            performCalculation();
+            operator = null;
+        }
+    }
+
+    function test() {
+        let button = event.target;
+        let buttonText = button.value;
+
+        if (!isNaN(parseInt(buttonText))) {
+            handleNumberClick(buttonText);
+        } else if (buttonText === '+' || buttonText === '-' || buttonText === '*' || buttonText === '/' || buttonText === '%') {
+            handleOperatorClick(buttonText);
+        } else if (buttonText === '=') {
+            equals();
+        } else if (buttonText === 'AC') {
+            clear();
+        }
+    }
+</script>
+</html>

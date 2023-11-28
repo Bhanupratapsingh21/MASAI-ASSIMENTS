@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 onclick="attsa()" id="myElement" >
+        hello 
+    </h1>
+    
+</body>
+<script>
+ // Move this line inside the attsa function or ensure it's executed after the page has loaded
+var elementById = document.getElementById('myElement');
+
+function attsa() {
+    elementById.setAttribute('class', 'newClass');
+    elementById.textContent = 'New text';
+
+    let newp = document.createElement('h1');
+    newp.textContent = "hello more more";
+    newp.id = "more";
+    document.body.appendChild(newp);
+    //Attach the event listener to the document body
+    
+}
+
+// Correct the addEventListener line
+
+function delete1(event) {
+    // Get the clicked element
+    let clickedElement = event.target;
+
+    // Change the color of the clicked element to green
+    clickedElement.parentNode.removeChild(clickedElement);
+}
+document.body.addEventListener("click", delete1);
+
+</script>
+</html>
