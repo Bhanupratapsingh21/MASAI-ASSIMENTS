@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLIDESHOW</title>
+    <link rel="shortcut icon" href="photos/Create Marvel's Style Logo.jpeg" type="image/x-icon">
+</head>
+<style>
+.slidebox{
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+    
+    justify-content: center;
+    align-items: center;
+}
+body{
+    background-color: black;
+}
+.slideimg{
+    margin-left: 170px;
+    transition: opacity 1s ease-in-out;
+    width: 50vw;
+    border: #FFA010 2px solid;
+    display: none;
+    height: 50vh;
+    aspect-ratio: 16/9;
+}
+.slideimg.active {
+        display: block;
+        opacity: 1;
+}
+#sbutton{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background-color:  #FFA010;
+    border: transparent;
+}
+.button{
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background-color:  #FFA010;
+    border: transparent;
+}
+#box2{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+</style>
+<body>
+    <div>
+        <div class="slidebox">
+            <img class="slideimg" src="photos/Create Marvel's Style Logo.jpeg" alt="">
+            <img class="slideimg" src="photos/Cartoon Space 1920x1080.jpeg" alt="">
+            <img class="slideimg" src="photos/bnr.jpeg" alt="">
+            <img class="slideimg" src="photos/1920x1080px free download HD wallpaper TV Show, We Bare Bears.jpeg" alt="">
+            <img class="slideimg" src="photos/Fun Facts About Pac-Man - The Fact Site.jpeg" alt="">
+            <img class="slideimg" src="photos/Hackers Wallpaper HD By Pcbots - Part-II.jpeg" alt="">
+            <img class="slideimg" src="photos/HD wallpaper Gravity Falls, dark, neon.jpeg" alt="">
+            <img class="slideimg" src="photos/Initial D trueno 3 hours doodle, Sayybils.jpeg" alt="">
+            <img class="slideimg" src="photos/innocence Han x SKZ oneshots - 3 __ Mine __ Jeongsung.jpeg" alt="">
+            <img class="slideimg" src="photos/low poly - swamp fishing, Tim D'hoore.jpeg" alt="">
+            <img class="slideimg" src="photos/netflix logo.jpeg" alt="">
+            <img class="slideimg" src="photos/Pin by yaaaa yoooo on Meus Pins salvos Landscape wallpaper, Scenery wallpaper, Computer wallpaper desktop wallpapers.jpeg" alt="">
+            <img class="slideimg" src="photos/Retro Coffee Shop Live Wallpaper [1920 x 1080].jpeg" alt="">
+            <img class="slideimg" src="photos/Retrowave F40 [ 3840 x 2160 ].jpeg" alt="">
+            <img class="slideimg" src="photos/Rick and Morty [1920x1080].jpeg" alt="">
+            <img class="slideimg" src="photos/Runner [1920×1080].jpeg" alt="">
+            <img class="slideimg" src="photos/Wallpaper Day 16.jpeg" alt="">
+            <img class="slideimg" src="photos/A quiet Japanese room (1920x1080)(1).jpeg" alt="">
+            <img class="slideimg" src="photos/HD wallpaper human evolution wallpaper, dark, minimalism, digital art, monochrome.jpeg" alt="">
+            <img class="slideimg" src="photos/Initial D trueno 3 hours doodle, Sayybils.jpeg" alt="">
+            <img class="slideimg" src="photos/Retrowave F40 [ 3840 x 2160 ].jpeg" alt="">
+            <img class="slideimg" src="photos/Wallpaper Day 16.jpeg" alt="">
+          </div>
+    </div>
+      <div id="box2">
+        <button id="provious" class="button"><</button>
+        <button class="button" id="sbutton">STOP</button>
+        <button id="next" class="button">></button>
+      </div>
+</body>
+<script>
+    let click = "y"
+    let slideindex = 0;
+    let showtime;
+    function slideshow(){
+        let slides = document.getElementsByClassName("slideimg");
+        for(let i = 0; i < slides.length ; i++){
+            slides[i].style.display = "none";
+        }
+        slideindex ++
+        if(slideindex > slides.length){
+            slideindex = 1
+        }
+        slides[slideindex-1].style.display = "block";
+        showtime = setTimeout(slideshow,2000);
+    }
+    function next(){
+        if(click == "y"){
+            clearTimeout(showtime)
+            click = "n"
+        }
+        let slides = document.getElementsByClassName("slideimg");
+        for(let i = 0; i < slides.length ; i++){
+            slides[i].style.display = "none";
+        }
+        slideindex ++
+        if(slideindex > slides.length){
+            slideindex = 1
+        }
+        slides[slideindex-1].style.display = "block";
+        
+    }
+    function provious(){
+        if(click == "y"){
+            clearTimeout(showtime)
+            click = "n"
+        }
+        let slides = document.getElementsByClassName("slideimg");
+        for(let i = 0; i < slides.length ; i++){
+            slides[i].style.display = "none";
+        }
+        slideindex --
+        if(slideindex > slides.length){
+            slideindex = 1
+        }
+        slides[slideindex-1].style.display = "block";
+    }
+
+    
+
+    let stopbutton = document.getElementById("sbutton")
+    stopbutton.addEventListener("click", stop)
+    function stop(){
+        if(click == "y"){
+            clearTimeout(showtime)
+            click = "n"
+        }
+        else{
+            slideshow()
+            click = "y"
+        }
+    }
+
+    let nextbutton = document.getElementById("next")
+    nextbutton.addEventListener('click', next,false)
+    
+    let proviousbutton = document.getElementById("provious")
+    proviousbutton.addEventListener('click',provious,false)
+
+
+    document.addEventListener("DOMContentLoaded",slideshow);
+</script>
+</html>

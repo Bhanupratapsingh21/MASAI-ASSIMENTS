@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIMER</title>
+    <link rel="shortcut icon" href="photos/Create Marvel's Style Logo.jpeg" type="image/x-icon">
+</head>
+<style>
+    #box{
+        border: 2px solid;
+    }
+    #box2{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        color: aliceblue;
+        align-items: center;
+        font-size: larger;
+
+        background-color: black;
+    }
+    #box3{
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    button:hover{
+        scale: 1.1;
+    }
+    button{
+        font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        background-color:#383838;
+        height: 50px;
+        font-size: 18px;
+        border: #FFA010 1px solid;
+        color: aliceblue;
+        border-radius: 20px;
+        width: 100px;
+    }
+    body{
+        background-color: rgb(0, 0, 0);
+    }
+    #display{
+        width: 100px;
+        height: 45px;
+        background-color: transparent;
+        border-color: transparent;
+        font-size: 25px;
+        border-radius: 50px;
+    }
+    .inputt{
+        width: 50px;
+        height: 45px;
+        background-color: transparent;
+        border-color: transparent;
+        font-size: 15px;
+        border-radius: 50px;
+    }
+    #fontd{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 50px;
+        background-color:#FFA010;
+        width: 140px;
+        font-size: 25px;
+        border-radius: 50px;
+        margin-bottom: 50px;
+        margin-top: 50px;
+    }
+</style>
+<body>
+<div id="box">
+    <div id="box2">
+        <div id="fontd">
+            <input  type="text" name="" id="display" readonly>
+        </div>
+        
+    </div>
+    <div id="box2">
+        <div id="fontd">
+            <input type="number" class="inputt" name="" id="hours" placeholder="Hour">
+        </div>
+        <div id="fontd">
+            <input type="number" class="inputt" name="" id="minutes" placeholder="Min">
+        </div>
+        <div id="fontd">
+            <input type="number" class="inputt" name="" id="seconds" placeholder="Sec">
+        </div>
+    </div>
+    <div id="box3">
+        <button id="start">START</button>
+        <button id="stop">STOP</button>
+        <button id="restart">RESTART</button>
+    </div>
+</div>
+</body>
+<script>
+
+const hoursInput = document.getElementById("hours");
+const minutesInput = document.getElementById("minutes");
+const secondsInput = document.getElementById("seconds");
+
+const display2 = document.getElementById("display");
+let time;
+let timeint;
+const startbutton = document.getElementById("start");
+const stopbutton = document.getElementById("stop");
+
+function timer() {
+    time = (+hoursInput.value*3600) + (+minutesInput.value* 60) + +secondsInput.value;
+    let currentTime = 1;
+    timeint = setInterval(function () {
+        if (time >= 1) {
+            time -= currentTime;
+            display2.value = formatTime(time);
+        }
+    }, 1000);
+}
+
+startbutton.addEventListener("click", timer);
+
+const stop = function () {
+    clearInterval(timeint);
+};
+
+stopbutton.addEventListener('click', stop);
+
+
+const restartbutton = document.getElementById("restart");
+restartbutton.addEventListener('click', function () {
+    clearInterval(timeint);
+    display2.value =  "00:00:00";
+    hoursInput.value = "";
+    minutesInput.value = "";
+    secondsInput.value = "";
+    stop()
+}, false);
+
+function formatTime(seconds){
+    const hrs = Math.floor(seconds/3600)
+    const mins = Math.floor((seconds% 3600) /60 ) ;
+    const secs = seconds % 60;
+    return `${String(hrs).padStart(2,"0")}:${String(mins).padStart(2,"0")}:${String(secs).padStart(2,"0")}`;
+}
+
+</script>
+</html>
