@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOBILE-PE</title>
+</head>
+<style>
+    body{
+        background-color: black;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    /**/
+    .form-container {
+     width: 300px;
+     background: linear-gradient(#212121, #212121) padding-box,
+              linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+     border: 2px solid transparent;
+     padding: 32px 24px;
+     font-size: 14px;
+    font-family: inherit;
+    color: white;
+    height: 350px;
+    display: flex;
+     flex-direction: column;
+     gap: 20px;
+    box-sizing: border-box;
+     border-radius: 16px;
+    }
+    /**/
+    #start{
+        display: block;
+        text-align: center;
+    }
+    #processing {
+    display:  none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #8f91ff;
+    }
+    #done{
+        display: none;
+    }
+    #reject{
+        display: none;
+    }
+
+    
+    #checkimg{
+        width: 180px;
+        mix-blend-mode: color;
+    }
+    #emojiscreen{
+        display: flex;
+        justify-content: center;
+    }
+    #inputp,
+    #inputamt{
+        margin-left:4px;
+        width:140px;
+        color: #8f91ff;
+        font-size: 20px;
+        height: 25px;
+        background-color: transparent;
+        filter: blur();
+    }
+    #finalmsg2,
+    #finalmsg{
+        text-align: center;
+    }
+    #restartbutton{
+        margin-left: 25px;
+    }
+    #restartbutton,
+    #pay{
+        height: 50px;
+        width: 200px; 
+        font-size: 18px;
+        background-color: #8f91ff;
+        border: transparent;
+        border-radius: 15px;
+    }
+    #pay:hover{
+        scale: 1.1;
+    }
+    /*start of prseing*/
+    .spinner {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  border: 4.5px solid #0000;
+  border-radius: 50%;
+  border-color: #dbdcef #0000;
+  animation: spinner-e04l1k 1s infinite linear;
+}
+
+.spinner::before,
+.spinner::after {
+  content: "";
+  grid-area: 1/1;
+  margin: 2.2px;
+  border: inherit;
+  border-radius: 50%;
+}
+
+.spinner::before {
+  border-color: #474bff #0000;
+  animation: inherit;
+  animation-duration: 0.5s;
+  animation-direction: reverse;
+}
+
+.spinner::after {
+  margin: 8.9px;
+}
+
+@keyframes spinner-e04l1k {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+</style>
+<body>  
+
+    <div class="form-container">
+        <div id="start">
+            <h2>MOBILE-PE</h2>
+            <br>
+            <br>
+            AMT = <input id="inputamt" type="number">
+            <br>
+            <br>
+            <br>
+            PASSWORD=<input placeholder="PASSW= 9578" type="text" name="" id="inputp">
+            <br>
+            <br>
+            <br>
+            <div>
+                <button id="pay">MAKE PAYMENT</button>
+            </div>
+        </div>
+        <div id="processing">
+            <div class="spinner"></div>
+            <h3>MAKING YOUR PAYMENT</h3>
+        </div>
+        <div id="reject" >
+            <h3 id="finalmsg"></h3>
+            <div>
+                <button id="restartbutton">MORE PAYMENT</button>
+            </div>
+        </div>
+        <div id="done">
+            <div id="emojiscreen">
+                <img src="check.gif" id="checkimg" alt="">
+            </div>
+            <h3 id="finalmsg2"></h3>
+            <div>
+                <button id="restartbutton">MORE PAYMENT</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+const startscreen = document.getElementById("start")
+const processingscreen = document.getElementById("processing")
+const rejectscreen = document.getElementById("reject")
+const donescreen = document.getElementById("done")
+const paybutton = document.getElementById("pay")
+let final = document.getElementById("finalmsg")
+let final2 = document.getElementById("finalmsg2")
+
+paybutton.addEventListener('click', function(){
+    
+    const promise = new Promise(function(resolve, reject){
+        
+        startscreen.style.display ="none"
+        processingscreen.style.display="flex"
+
+        setTimeout(function(){
+            const AMT = document.getElementById("inputamt").value
+            const PASSW = document.getElementById("inputp").value
+            
+            if(PASSW == 9578){
+                resolve(AMT);
+            }else{
+                reject(PASSW)
+            }
+        },2000)
+    });
+
+    promise.then((amt)=>{
+    console.log("paymentdone")
+    processingscreen.style.display ="none";
+    donescreen.style.display = "block";
+    final2.innerHTML = `Your Payment Of : ₹ ${amt} Is Done`;
+    
+})
+.catch((passw)=>{
+    processingscreen.style.display = "none"
+    rejectscreen.style.display = "block"
+    final.innerHTML = `YOUR ENTERED PASSWORD : ${passw} IS WRONG`
+}).finally(()=>{
+    console.log("PROMISE done")
+});
+});
+
+const restartbutton = document.querySelectorAll("#restartbutton")
+
+setTimeout(()=> {
+    restartbutton.forEach((button) => {
+    button.addEventListener('click',()=>{
+    rejectscreen.style.display = "none"
+    donescreen.style.display ="none"
+    startscreen.style.display = "block"
+    const inputAmt = document.getElementById("inputamt");
+    const inputPassw = document.getElementById("inputp");
+    inputAmt.value = "";
+    inputPassw.value = "";
+})
+})
+},2000)
+
+
+</script>
+</html>

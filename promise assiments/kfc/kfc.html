@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KFC</title>
+    <style>
+        body {
+            margin: 0%;
+            padding: 0%;
+            background-color: black;
+            color: aliceblue;
+        }
+
+        #navigation {
+            margin-top: -20px;
+            height: 40px;
+            padding: 0%;
+            background-color: red;
+            text-align: center;
+        }
+
+        #box {
+            display: flex;
+            width: 100vw;
+            justify-content: space-between;
+        }
+
+        #displaybox {
+            margin-top: 25px;
+            width: 30vw;
+            border: 2px rebeccapurple solid;
+        }
+
+        #orderbox {
+            margin-top: 25px;
+            width: 30vw;
+            border: 2px solid red;
+        }
+
+        #imgfood {
+            width: 280px;
+            filter: blur(2px);
+        }
+
+        #boximg {
+            display: flex;
+            justify-content: center;
+            width: 25rem;
+            height: 80px;
+        }
+
+        #list {
+            color: rgb(255, 0, 0);
+            font-weight: 900;
+            font-size: 25px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        #displaybox {
+            text-align: center;
+        }
+
+        #foodContainer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #foodImage {
+            max-width: 100%;
+            max-height: 300px;
+            display: none;
+        }
+
+        #orderNumber {
+            top: 10px;
+            right: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: green;
+        }
+
+        #orderbutton {
+            background-color: red;
+            border: transparent;
+            width: 100px;
+            margin-left: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+            height: 50px;
+            font-size: 15px;
+        }
+
+        #orderbutton:hover {
+            scale: 1.1;
+        }
+
+        .order-item-image {
+            width: 70px;
+            height: 50px;
+            margin: 5px;
+            border: 2px solid red;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="navigation">
+    <h1>ORDER FOOD WITH US</h1>
+</div>
+<div id="box">
+    <div id="orderbox">
+        <div id="checkbox">
+            <div>
+                <input type="checkbox" name="BURGER" id="burger">BURGER
+            </div>
+            <div>
+                <input type="checkbox" name="PIZZA" id="pizza">PIZZA
+            </div>
+            <div>
+                <input type="checkbox" name="PASTA" id="pasta">PASTA
+            </div>
+            <div>
+                <input type="checkbox" name="PEPSI" id="pepsi">PEPSI
+            </div>
+        </div>
+        <div>
+            <button id="orderbutton">ORDER-FOOD</button>
+        </div>
+
+    </div>
+
+    <div id="displaybox">
+        <div>
+            <h2 id="list">ORDER-LIST</h2>
+        </div>
+        <div id="orderNumber"></div>
+    </div>
+</div>
+<script>
+    document.getElementById('orderbutton').addEventListener('click', () => {
+        const selecteditems = getselectedfood();
+        if (!selecteditems.length) {
+            alert('PLEASE SELECT ONE ITEM');
+            return;
+        }
+        orderfood(selecteditems);
+    });
+
+    function getselectedfood() {
+        const checkitems = document.querySelectorAll('#checkbox input[type="checkbox"]');
+        const selecteditems = [];
+        checkitems.forEach(element => {
+            if (element.checked) {
+                selecteditems.push(element.id);
+            }
+        });
+        return selecteditems;
+    }
+
+    function orderfood(selecteditems) {
+        const orderpromise = new Promise((resolve) => {
+            setTimeout(() => {
+                resolve();
+            }, 3000);
+        });
+        orderpromise.then(() => {
+            displayfood(selecteditems);
+        });
+    }
+
+    function displayfood(selecteditems) {
+        const orderNumberdiv = document.getElementById("orderNumber");
+        orderNumberdiv.innerHTML = '';
+
+        const orderno = generaterandom();
+
+        selecteditems.forEach(item => {
+            const imgElement = document.createElement('img');
+            const randomfoodimgpath = item + '.jpeg';
+            imgElement.src = randomfoodimgpath;
+            imgElement.alt = item;
+            imgElement.classList.add('order-item-image');
+            orderNumberdiv.appendChild(imgElement);
+        });
+
+        const orderNumberText = document.createElement('div');
+        orderNumberText.textContent = `Order #${orderno}`;
+        orderNumberdiv.appendChild(orderNumberText);
+    }
+
+    function generaterandom() {
+        return Math.floor(Math.random() * 1000) + 1;
+    }
+</script>
+</body>
+</html>
